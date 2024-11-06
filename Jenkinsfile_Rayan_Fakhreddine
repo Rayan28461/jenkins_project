@@ -32,7 +32,7 @@ pipeline {
                 script {
                     bat """
                     call ${VIRTUAL_ENV}\\Scripts\\activate.bat
-                    pytest
+                    unittest tests/test_app.py
                     """
                 }
             }
