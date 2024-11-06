@@ -13,6 +13,7 @@ pipeline {
                     bat """
                     call ${VIRTUAL_ENV}\\Scripts\\activate.bat
                     pip install -r requirements.txt
+                    pip install coverage bandit
                     """
                 }
             }
@@ -49,6 +50,16 @@ pipeline {
                 }
             }
         }
+        stage('Security Scan') {
+            steps {
+                script {
+                    bat """
+                    call ${VIRTUAL_ENV}\\Scripts\\activate.bat
+                    bandit -r src -o bandit_report.html
+                    """
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
@@ -63,6 +74,7 @@ pipeline {
         }
         success {
             archiveArtifacts artifacts: 'coverage_html_report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'bandit_report.html', allowEmptyArchive: true
         }
     }
 }
