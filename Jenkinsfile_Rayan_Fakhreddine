@@ -37,6 +37,18 @@ pipeline {
                 }
             }
         }
+        stage('Coverage') {
+            steps {
+                script {
+                    bat """
+                    call ${VIRTUAL_ENV}\\Scripts\\activate.bat
+                    coverage run --source=src -m unittest discover -s tests
+                    coverage report
+                    coverage html -d coverage_html_report
+                    """
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
@@ -48,6 +60,9 @@ pipeline {
     post {
         always {
             cleanWs()
+        }
+        success {
+            archiveArtifacts artifacts: 'coverage_html_report/**', allowEmptyArchive: true
         }
     }
 }
