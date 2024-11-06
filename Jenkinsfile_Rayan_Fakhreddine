@@ -22,7 +22,7 @@ pipeline {
                 script {
                     bat """
                     call ${VIRTUAL_ENV}\\Scripts\\activate.bat
-                    flake8 app.py
+                    flake8 src.app.py
                     """
                 }
             }
