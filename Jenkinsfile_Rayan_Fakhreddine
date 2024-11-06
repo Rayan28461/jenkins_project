@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
                     bat """
-                    bash deploy.sh local  // or replace 'remote' with 'local' for local deployment
+                    bash deploy.bat local  // or replace 'remote' with 'local' for local deployment
                     """
                 }
             }
